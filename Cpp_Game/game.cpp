@@ -6,7 +6,7 @@ float player_1_p, player_1_dp, player_2_p, player_2_dp;
 float arena_half_size_x = 85, arena_half_size_y = 45;
 float player_half_size_x = 1.5, player_half_size_y = 10;
 
-float ball_p_x, ball_p_y, ball_dp_x = 100, ball_dp_y, ball_half_size = 1;
+float ball_p_x, ball_p_y, ball_dp_x = 120, ball_dp_y, ball_half_size = 1;
 
 int player_1_score, player_2_score;
 
@@ -38,9 +38,16 @@ internal void simulate_game(Input* input, float dt) {
 	draw_rect(0, 0, arena_half_size_x, arena_half_size_y, 0x000000);
 
 	float player_1_ddp = 0.f; // unit per second instead of frame
-
+#if 0
 	if (is_down(BUTTON_UP)) player_1_ddp += 2000;
 	if (is_down(BUTTON_DOWN)) player_1_ddp -= 2000;
+#else
+	//if (ball_p_y > player_1_p) player_1_ddp += 1000;
+	//if (ball_p_y < player_1_p) player_1_ddp -= 1000;
+	player_1_ddp = (ball_p_y - player_1_p) * 100;
+	if (player_1_ddp > 1300) player_1_ddp = 1300;
+	if (player_1_ddp < -1300) player_1_ddp = -1300;
+#endif
 
 	float player_2_ddp = 0.f; // unit per second instead of frame
 
