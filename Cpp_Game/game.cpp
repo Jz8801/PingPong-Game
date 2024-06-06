@@ -108,7 +108,7 @@ internal void simulate_game(Input* input, float dt) {
 	}
 	*/
 	draw_number(player_1_score, -10, 40, 1.f, 0xbbffbb);
-	draw_number(player_2_score, -10, 40, 1.f, 0xbbffbb);
+	draw_number(player_2_score, 10, 40, 1.f, 0xbbffbb);
 
 	draw_rect(ball_p_x, ball_p_y, ball_half_size, ball_half_size, 0xffffff);
 
