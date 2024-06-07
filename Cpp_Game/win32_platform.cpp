@@ -53,6 +53,8 @@ LRESULT CALLBACK window_callback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 }
 
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
+	ShowCursor(FALSE);
+
 	// Create Window Class
 	WNDCLASS window_class = {};
 	window_class.style = CS_HREDRAW | CS_VREDRAW;
@@ -63,7 +65,15 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 	RegisterClass(&window_class);
 
 	// Create Window
-	HWND window = CreateWindow(window_class.lpszClassName, L"My First Game!", WS_OVERLAPPEDWINDOW | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720, 0, 0, hInstance, 0);
+	HWND window = CreateWindow(window_class.lpszClassName, L"PINGPONG GAME", WS_OVERLAPPEDWINDOW | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720, 0, 0, hInstance, 0);
+	{
+		// Fullscreen
+		SetWindowLong(window, GWL_STYLE, GetWindowLong(window, GWL_STYLE) & ~WS_OVERLAPPEDWINDOW);
+		MONITORINFO mi = { sizeof(mi) };
+		GetMonitorInfo(MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY), &mi);
+		SetWindowPos(window, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+	}
+
 	HDC hdc = GetDC(window);
 
 	Input input = {};
@@ -106,6 +116,9 @@ input.buttons[b].changed = true;\
 						process_button(BUTTON_DOWN, VK_DOWN);
 						process_button(BUTTON_W, 'W');
 						process_button(BUTTON_S, 'S');
+						process_button(BUTTON_LEFT, VK_LEFT);
+						process_button(BUTTON_RIGHT, VK_RIGHT);
+						process_button(BUTTON_ENTER, VK_RETURN);
 					}
 				} break;
 
