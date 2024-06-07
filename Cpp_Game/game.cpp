@@ -43,8 +43,8 @@ int hot_button;
 bool enemy_is_ai;
 
 internal void simulate_game(Input* input, float dt) {
-	clear_screen(0xffffff);
 	draw_rect(0, 0, arena_half_size_x, arena_half_size_y, 0x000000);
+	draw_arena_borders(arena_half_size_x, arena_half_size_y, 0xffffff);
 
 	if (current_gamemode == GM_GAMEPLAY) {
 		float player_1_ddp = 0.f; // unit per second instead of frame

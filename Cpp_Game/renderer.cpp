@@ -26,6 +26,21 @@ draw_rect_in_pixels(int x0, int y0, int x1, int y1, u32 color) {
 
 global_variable float render_scale = 0.01f;
 
+internal void draw_arena_borders(float arena_x, float arena_y, u32 color) {
+	arena_x *= render_state.height * render_scale;
+	arena_y *= render_state.height * render_scale;
+
+	int x0 = (int)((float)render_state.width * .5f - arena_x);
+	int x1 = (int)((float)render_state.width * .5f + arena_x);
+	int y0 = (int)((float)render_state.height * .5f - arena_y);
+	int y1 = (int)((float)render_state.height * .5f + arena_y);
+
+	draw_rect_in_pixels(0, 0, render_state.width, y0, color);
+	draw_rect_in_pixels(0, y1, x1, render_state.height, color);
+	draw_rect_in_pixels(0, y0, x0, y1, color);
+	draw_rect_in_pixels(x1, y0, render_state.width, render_state.height, color);
+}
+
 internal void
 draw_rect(float x, float y, float half_size_x, float half_size_y, u32 color) {
 	x *= render_state.height * render_scale;
